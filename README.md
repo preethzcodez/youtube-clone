@@ -13,7 +13,7 @@ This is a clone of YouTube created using the free version of the YouTube Data AP
 ## How To Run
 
  - Get API Key from Google 
-  *https://cloud.google.com/apis/docs/overview*
+ *https://cloud.google.com/apis/docs/overview*
  *https://developers.google.com/youtube/v3/docs/*
  - Create **.env** file and add *<YOUR_API_KEY>*
    
@@ -39,6 +39,6 @@ This is a clone of YouTube created using the free version of the YouTube Data AP
        npm run build
 
 ## Tools Used
-React
-Redux Toolkit
-Tailwind CSS
+ React
+ Redux Toolkit
+ Tailwind CSS
