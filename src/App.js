@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { sidebarSlideToggle, sidebarToggle } from "./redux/sidebarSlice";
 import UserProfile from "./components/header/UserProfile";
 import Error from "./components/error/Error";
-import { useRef } from "react";
 
 /**
  * Header
