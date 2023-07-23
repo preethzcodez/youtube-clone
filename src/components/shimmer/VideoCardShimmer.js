@@ -1,9 +1,12 @@
 import React from "react";
 
-const VideoCardShimmer = () => {
+const VideoCardShimmer = ({ videoCardWidth }) => {
   return (
-    <div className=" animate-pulse p-4">
-      <div className="w-[360px] h-[200px] bg-slate-300 rounded-2xl"></div>
+    <div className=" animate-pulse">
+      <div
+        className="h-[200px] bg-slate-300 rounded-2xl"
+        style={{ width: videoCardWidth }}
+      ></div>
       <div className="mt-2 flex">
         <img
           className="w-10 h-10 bg-slate-300 rounded-full"

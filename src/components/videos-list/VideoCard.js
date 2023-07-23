@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { formatDate, viewsNumberFormatter } from "../../utils/utilHelper";
-import {
-  CHANNEL_DETAILS_API,
-} from "../../utils/constants";
+import { CHANNEL_DETAILS_API } from "../../utils/constants";
 
-const VideoCard = ({ videoData }) => {
+const VideoCard = ({ videoData, videoCardWidth }) => {
   const [channelImageUrl, setChannelImageUrl] = useState(null);
 
   // fetch channel image
@@ -20,19 +18,20 @@ const VideoCard = ({ videoData }) => {
   }, [videoData?.snippet?.channelId]);
 
   return (
-    <div className="p-4 cursor-pointer">
-      <div className="w-[300px] h-[160px] bg-slate-300 rounded-2xl overflow-hidden">
+    <div className="cursor-pointer" style={{ width: videoCardWidth }}>
+      <div className="h-auto bg-slate-300 rounded-2xl overflow-hidden">
         <img
-          /* className="w-[360px] h-[200px]" */
           src={videoData?.snippet?.thumbnails?.maxres?.url}
-          alt=""
+          alt="video thumbnail"
+          loading="lazy"
         />
       </div>
-      <div className="w-[300px] mt-2 flex">
+      <div className="mt-2 flex">
         <img
           className="w-10 h-10 bg-slate-300 rounded-full"
           src={channelImageUrl}
-          alt=""
+          alt="channel thumbnail"
+          loading="lazy"
         />
 
         <div className="ml-2 flex flex-col flex-1">

@@ -18,7 +18,9 @@ const VideosListContainer = () => {
     (store) => store.mostPopularVideos.data
   );
   const videosListRef = useRef(mostPopularVideosList);
-  const marginLeft = useSelector((store) => store.sidebar.minWidth);
+  const containerRef = useRef(null);
+  const [videoCardWidth, setVideoCardWidth] = useState(`${316}px`);
+  const sidebarOpen = useSelector((store) => store.sidebar.isOpen);
 
   useEffect(() => {
     fetchMostPopular(mostPopularVideosList?.nextPageToken);
@@ -33,6 +35,29 @@ const VideosListContainer = () => {
   useEffect(() => {
     videosListRef.current = mostPopularVideosList;
   }, [mostPopularVideosList]);
+
+  useEffect(() => {
+    const updateDivWidth = () => {
+      if (containerRef.current) {
+        const newWidth = containerRef.current.offsetWidth;
+        const itemsPerRow = Math.floor(newWidth / 316);
+        let itemWidth = newWidth / itemsPerRow - 16;
+        itemWidth = itemWidth < 300 ? 316 : itemWidth;
+        setVideoCardWidth(`${Math.floor(itemWidth)}px`);
+      }
+    };
+
+    // Call the function once to get the initial width
+    updateDivWidth();
+
+    // Attach the throttled event listener on window resize
+    window.addEventListener("resize", updateDivWidth);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", updateDivWidth);
+    };
+  }, [sidebarOpen]);
 
   const handleScroll = () => {
     const pageToken = videosListRef?.current?.nextPageToken;
@@ -55,16 +80,19 @@ const VideosListContainer = () => {
   return (
     <>
       <HorizontalListContainer />
-      <div className="flex" style={{ marginLeft }}>
-        <div className="flex p-4 flex-wrap justify-center">
+      <div
+        ref={containerRef}
+        className="flex m-4 ml-11" /* style={{ marginLeft }} */
+      >
+        <div className="flex gap-4 flex-wrap justify-start">
           {mostPopularVideosList?.items?.map((video) => (
             <Link key={video.id} to={`/watch?v=${video.id}`}>
-              <VideoCard videoData={video} />
+              <VideoCard videoData={video} videoCardWidth={videoCardWidth} />
             </Link>
           ))}
           {isLoading &&
-            Array.apply(null, { length: 6 }).map((e, i) => {
-              return <VideoCardShimmer key={i} />;
+            Array.apply(null, { length: 20 }).map((e, i) => {
+              return <VideoCardShimmer key={i} videoCardWidth={videoCardWidth} />;
             })}
         </div>
       </div>{" "}
